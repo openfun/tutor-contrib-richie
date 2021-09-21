@@ -1,0 +1,6 @@
+richie:
+  command: ./sandbox/manage.py runserver 0.0.0.0:8003
+  env_file:
+    - ../plugins/richie/apps/env.d/development
+  ports:
+      - "8003:8003"

@@ -1,0 +1,2 @@
+# Install Richie catalog integration app
+RUN pip install -e "git+https://github.com/overhangio/tutor-richie.git#egg=richie-edx-platform&subdirectory=contrib/edx-platform"

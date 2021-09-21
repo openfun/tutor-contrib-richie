@@ -1,0 +1,21 @@
+richie-job:
+    image: {{ RICHIE_DOCKER_IMAGE }}
+    depends_on: {{ [("elasticsearch", RUN_ELASTICSEARCH), ("mysql", RUN_MYSQL)]|list_if }}
+    # Run as root to fix media permissions
+    user: root
+    env_file:
+      - ../plugins/richie/apps/env.d/production
+    volumes:
+      - ../plugins/richie/apps/settings/tutor.py:/app/richie/sandbox/tutor.py:ro
+      - ../../data/richie/media:/data/media
+richie-openedx-job:
+    image: {{ DOCKER_IMAGE_OPENEDX }}
+    environment:
+      SERVICE_VARIANT: cms
+      SETTINGS: ${TUTOR_EDX_PLATFORM_SETTINGS:-tutor.production}
+    volumes:
+      - ../apps/openedx/settings/lms/:/openedx/edx-platform/lms/envs/tutor/:ro
+      - ../apps/openedx/settings/cms/:/openedx/edx-platform/cms/envs/tutor/:ro
+      - ../apps/openedx/config/:/openedx/config/:ro
+    depends_on:
+      - richie

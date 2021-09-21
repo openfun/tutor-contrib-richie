@@ -1,0 +1,3 @@
+- name: richie-settings
+  files:
+    - plugins/richie/apps/settings/tutor.py

@@ -1,0 +1,2 @@
+# Initial sync of course runs
+./manage.py cms shell -c "from richie.sync import sync_all_courses; sync_all_courses()"

@@ -1,0 +1,11 @@
+# Richie settings
+RICHIE_ROOT_URL = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ RICHIE_HOST }}"
+MARKETING_SITE_ROOT = RICHIE_ROOT_URL
+MKTG_URLS = {
+  "ROOT": RICHIE_ROOT_URL
+}
+RICHIE_COURSE_HOOK = {
+  "secret": "{{ RICHIE_HOOK_SECRET }}",
+  "url": "http://richie:8000/api/v1.0/course-runs-sync/",
+  "timeout": 3,
+}

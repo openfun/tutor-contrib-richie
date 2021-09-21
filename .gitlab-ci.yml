@@ -1,0 +1,10 @@
+variables:
+    TUTOR_PLUGIN: richie
+    TUTOR_IMAGES: richie
+    TUTOR_PYPI_PACKAGE: tutor-richie
+    OPENEDX_RELEASE: lilac
+    GITHUB_REPO: overhangio/tutor-richie
+
+include:
+  - project: 'community/tutor-ci'
+    file: 'plugin-gitlab-ci.yml'

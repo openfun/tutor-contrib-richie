@@ -1,0 +1,11 @@
+# Fix media permissions
+chown -R openedx:openedx /data/media
+
+# Create tables
+./sandbox/manage.py migrate
+
+# Create ES indices
+./sandbox/manage.py bootstrap_elasticsearch
+
+# Create required pages
+./sandbox/manage.py richie_init

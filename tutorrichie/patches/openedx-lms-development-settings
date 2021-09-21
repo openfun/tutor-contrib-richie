@@ -1,0 +1,2 @@
+# Richie (lms development)
+CORS_ORIGIN_WHITELIST.append("{{ RICHIE_HOST }}:8003")

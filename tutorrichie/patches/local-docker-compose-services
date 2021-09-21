@@ -1,0 +1,9 @@
+richie:
+  image: {{ RICHIE_DOCKER_IMAGE }}
+  restart: unless-stopped
+  env_file:
+    - ../plugins/richie/apps/env.d/production
+  volumes:
+    - ../plugins/richie/apps/settings/tutor.py:/app/richie/sandbox/tutor.py:ro
+    - ../../data/richie/media:/data/media
+  depends_on: {{ [("elasticsearch", RUN_ELASTICSEARCH), ("lms", RUN_LMS), ("mysql", RUN_MYSQL)]|list_if }}

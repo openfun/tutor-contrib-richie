@@ -1,0 +1,6 @@
+# Richie (development)
+RICHIE_ROOT_URL = "http://{{ RICHIE_HOST }}:8003"
+MARKETING_SITE_ROOT = RICHIE_ROOT_URL
+MKTG_URLS = {
+  "ROOT": RICHIE_ROOT_URL
+}

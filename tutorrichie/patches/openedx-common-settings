@@ -1,0 +1,2 @@
+# Richie settings (common)
+FEATURES["ENABLE_MKTG_SITE"] = True
