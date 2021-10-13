@@ -72,6 +72,11 @@ Then, run a development server::
 
 The Richie development server will be available at http://courses.local.overhang.io:8003.
 
+Troubleshooting
+---------------
+
+Do you need help with this plugin? Get in touch with the maintainers of Richie by opening a GitHub issue: https://github.com/openfun/richie/issues/
+
 License
 -------
 
