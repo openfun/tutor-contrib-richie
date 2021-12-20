@@ -1,2 +1,2 @@
 # Richie (lms development)
-CORS_ORIGIN_WHITELIST.append("{{ RICHIE_HOST }}:8003")
+CORS_ORIGIN_WHITELIST.append("http://{{ RICHIE_HOST }}:8003")
