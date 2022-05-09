@@ -38,14 +38,14 @@ WORKDIR /app/richie
 # Install project (with requirements)
 RUN python -m venv /app/venv
 ENV PATH /app/venv/bin:${PATH}
-RUN pip install pip==21.3.1 setuptools==60.0.1 wheel==0.37.0
+RUN pip install pip==22.0.4 setuptools==62.1.0 wheel==0.37.1
 RUN pip install -e .[sandbox]
 RUN pip install uwsgi==2.0.20
 RUN pip install mysqlclient==2.1.0
 # Use temporarily a forked version of djangocms-admin-style
 # Remove this when djangocms-admin-style 2.0.3 will be released\
 # See upstream Dockerfile https://github.com/openfun/richie/blob/master/Dockerfile
-RUN pip install --prefix=/install git+https://github.com/jbpenrath/djangocms-admin-style@fun#egg=djangocms-admin-style
+RUN pip install git+https://github.com/jbpenrath/djangocms-admin-style@fun#egg=djangocms-admin-style
 # Install requirements for storing media assets on S3/MinIO
 RUN pip install django-storages==1.12.3 boto3==1.20.25
 
