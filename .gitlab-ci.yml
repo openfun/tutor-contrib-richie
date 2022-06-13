@@ -2,7 +2,7 @@ variables:
     TUTOR_PLUGIN: richie
     TUTOR_IMAGES: richie
     TUTOR_PYPI_PACKAGE: tutor-richie
-    OPENEDX_RELEASE: maple
+    OPENEDX_RELEASE: nutmeg
     GITHUB_REPO: overhangio/tutor-richie
 
 include:
