@@ -18,7 +18,8 @@ Every user-facing change should have an entry in this changelog. Please respect 
 
 ## [Unrealeased]
 
-- [Feature] Upgrade richie to v2.15.1
+- [Feature] Upgrade richie to v2.15.1 (by @BbrSofiane)
+- [Feature] Support deployment of richie site factory (by @BbrSofiane)
 
 Upgrade node to 16
 

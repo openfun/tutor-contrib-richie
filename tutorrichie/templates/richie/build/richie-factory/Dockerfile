@@ -1,3 +1,5 @@
+ARG SITE={{ RICHIE_FACTORY_SITE }}
+
 #--------- Base image with cloned repo
 FROM python:3.7-bullseye as base
 
@@ -6,22 +8,28 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone repo
-ARG RICHIE_REPOSITORY=https://github.com/openfun/richie.git
-ARG RICHIE_VERSION={{ RICHIE_RELEASE_VERSION }}
-RUN git clone $RICHIE_REPOSITORY --branch $RICHIE_VERSION --depth 1 /richie
+ARG RICHIE_FACTORY_REPOSITORY={{ RICHIE_FACTORY_REPOSITORY }}
+ARG RICHIE_FACTORY_VERSION={{ RICHIE_FACTORY_VERSION }}
+ARG SITE
+RUN git clone $RICHIE_FACTORY_REPOSITORY --branch $RICHIE_FACTORY_VERSION --depth 1 /richie
 
 #--------- Front-end builder image
 FROM node:16 as frontend-builder
 
-COPY --from=base /richie/src/frontend /app/richie/src/frontend
-WORKDIR /app/richie/src/frontend
-RUN yarn install --frozen-lockfile && \
+ARG SITE
+
+COPY --from=base /richie/sites/${SITE}/src/frontend /app/richie/sites/${SITE}/src/frontend
+WORKDIR /app/richie/sites/${SITE}/src/frontend
+# --frozen-lockfile
+RUN yarn install && \
     yarn compile-translations && \
     yarn build-ts-production && \
     yarn build-sass-production
 
 #--------- Production image
 FROM python:3.7-bullseye as production
+
+ARG SITE
 
 RUN apt update \
     && apt install -y gettext git default-mysql-client \
@@ -33,13 +41,13 @@ RUN mkdir -p /data/media /data/static && chown -R openedx:openedx /data
 USER openedx
 
 COPY --from=base --chown=openedx:openedx /richie /app/richie
-WORKDIR /app/richie
+WORKDIR /app/richie/sites/${SITE}
 
 # Install project (with requirements)
 RUN python -m venv /app/venv
 ENV PATH /app/venv/bin:${PATH}
 RUN pip install pip==22.0.4 setuptools==62.1.0 wheel==0.37.1
-RUN pip install -e .[sandbox]
+RUN pip install -r requirements/base.txt
 RUN pip install uwsgi==2.0.20
 RUN pip install mysqlclient==2.1.0
 # The django-cms fork includes drillable search feature,
@@ -49,24 +57,27 @@ RUN pip install git+https://github.com/jbpenrath/django-cms@fun-3.11.0#egg=djang
 # Install requirements for storing media assets on S3/MinIO
 RUN pip install django-storages==1.12.3 boto3==1.20.25
 
-ENV DJANGO_SETTINGS_MODULE settings
+WORKDIR /app/richie/sites/${SITE}/src/backend
+
+ENV PYTHONPATH "${PYTHONPATH}:/app/richie/sites/${SITE}/src/backend"
+ENV DJANGO_SETTINGS_MODULE ${SITE}.settings
 ENV DJANGO_CONFIGURATION Production
 ENV DJANGO_SECRET_KEY setme
+ENV DJANGO_AWS_ACCESS_KEY_ID setme
+ENV DJANGO_AWS_SECRET_ACCESS_KEY setme
+
+ENV SITE=${SITE}
 
 # Collect static assets
 COPY --from=frontend-builder --chown=openedx:openedx \
-  /app/richie/src/richie/static/richie/js \
-  /app/richie/src/richie/static/richie/js
-COPY --from=frontend-builder --chown=openedx:openedx \
-  /app/richie/src/richie/static/richie/css/main.css \
-  /app/richie/src/richie/static/richie/css/main.css
-RUN ./sandbox/manage.py collectstatic
+    /app/richie/sites/${SITE}/src/backend/base/static/richie \
+    /app/richie/sites/${SITE}/src/backend/base/static/richie
+RUN ./manage.py collectstatic
 
 # Compile translations
-RUN ./sandbox/manage.py compilemessages
+RUN mkdir -p locale && ./manage.py compilemessages
 
 # Run server
-WORKDIR /app/richie/sandbox
 EXPOSE 8000
 CMD uwsgi \
     --static-map /static=/data/static/ \
@@ -77,4 +88,4 @@ CMD uwsgi \
     --enable-threads \
     --processes=${UWSGI_WORKERS:-2} \
     --buffer-size=8192 \
-    --wsgi-file wsgi.py
+    --wsgi-file ${SITE}/wsgi.py

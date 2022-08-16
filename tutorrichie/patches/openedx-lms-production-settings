@@ -5,3 +5,9 @@ MKTG_URLS = {
   "ROOT": RICHIE_ROOT_URL
 }
 CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ RICHIE_HOST }}")
+CSRF_TRUSTED_ORIGINS.append("{{ RICHIE_HOST }}")
+RICHIE_COURSE_HOOK = {
+  "secret": "{{ RICHIE_HOOK_SECRET }}",
+  "url": "http://richie:8000/api/v1.0/course-runs-sync/",
+  "timeout": 3,
+}

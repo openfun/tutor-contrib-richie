@@ -45,7 +45,7 @@ Configuration
 
 This Tutor plugin comes with a few configuration settings:
 
-- ``RICHIE_RELEASE_VERSION`` (default: ``"v2.8.2"``)
+- ``RICHIE_RELEASE_VERSION`` (default: ``"v2.16.0"``)
 - ``RICHIE_HOST`` (default: ``"courses.{{ LMS_HOST }}"``)
 - ``RICHIE_MYSQL_DATABASE`` (default: ``"richie"``)
 - ``RICHIE_MYSQL_USERNAME`` (default: ``"richie"``)

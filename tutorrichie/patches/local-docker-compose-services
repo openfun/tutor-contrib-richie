@@ -1,3 +1,19 @@
+{% if RICHIE_FACTORY_REPOSITORY %}
+richie:
+  image: {{ RICHIE_FACTORY_DOCKER_IMAGE }}
+  restart: unless-stopped
+  user: "1000:1000"
+  env_file:
+    - ../plugins/richie/apps/env.d/production
+  volumes:
+    - ../plugins/richie/apps/settings/tutor.py:/app/richie/sites/{{ RICHIE_FACTORY_SITE }}/src/backend/{{ RICHIE_FACTORY_SITE }}/tutor.py:ro
+    - ../../data/richie/media:/data/media
+  depends_on:
+    - richie-permissions
+    {% if RUN_ELASTICSEARCH %}- elasticsearch{% endif %}
+    {% if RUN_LMS %}- lms{% endif %}
+    {% if RUN_MYSQL %}- mysql{% endif %}
+{% else %}
 richie:
   image: {{ RICHIE_DOCKER_IMAGE }}
   restart: unless-stopped
@@ -12,6 +28,8 @@ richie:
     {% if RUN_ELASTICSEARCH %}- elasticsearch{% endif %}
     {% if RUN_LMS %}- lms{% endif %}
     {% if RUN_MYSQL %}- mysql{% endif %}
+{% endif %}
+
 
 richie-permissions:
   image: {{ DOCKER_IMAGE_PERMISSIONS }}

@@ -1,2 +1,6 @@
 # Richie settings (common)
 FEATURES["ENABLE_MKTG_SITE"] = True
+
+CSRF_COOKIE_NAME = "edx_csrf_token"
+CSRF_COOKIE_DOMAIN = ".{{ LMS_HOST }}"
+SESSION_COOKIE_NAME = "edx_session"

@@ -1,2 +1,3 @@
 # Richie (lms development)
 CORS_ORIGIN_WHITELIST.append("http://{{ RICHIE_HOST }}:8003")
+CSRF_TRUSTED_ORIGINS.append("{{ RICHIE_HOST }}:8003")

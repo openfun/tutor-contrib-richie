@@ -1,4 +1,13 @@
+{% if RICHIE_FACTORY_REPOSITORY %}
+# Caches settings - makes debugging faster
+# TODO Configure to use the redis service
+CACHE_DEFAULT_BACKEND=django.core.cache.backends.locmem.LocMemCache
+CACHE_DEFAULT_LOCATION=""
+CACHE_DEFAULT_OPTIONS={}
+DJANGO_SETTINGS_MODULE={{ RICHIE_FACTORY_SITE }}.tutor
+{% else %}
 DJANGO_SETTINGS_MODULE=tutor
+{% endif %}
 DJANGO_CONFIGURATION=TutorProduction
 DJANGO_SECRET_KEY={{ RICHIE_SECRET_KEY}}
 DJANGO_ALLOWED_HOSTS=richie,{{ RICHIE_HOST }}
