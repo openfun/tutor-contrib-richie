@@ -1,3 +1,15 @@
+{% if RICHIE_FACTORY_REPOSITORY %}
+richie-job:
+    image: {{ RICHIE_FACTORY_DOCKER_IMAGE }}
+    depends_on: {{ [("elasticsearch", RUN_ELASTICSEARCH), ("mysql", RUN_MYSQL)]|list_if }}
+    # Run as root to fix media permissions
+    user: root
+    env_file:
+      - ../plugins/richie/apps/env.d/production
+    volumes:
+      - ../plugins/richie/apps/settings/tutor.py:/app/richie/sites/{{ RICHIE_FACTORY_SITE }}/src/backend/{{ RICHIE_FACTORY_SITE }}/tutor.py:ro
+      - ../../data/richie/media:/data/media
+{% else %}
 richie-job:
     image: {{ RICHIE_DOCKER_IMAGE }}
     depends_on: {{ [("elasticsearch", RUN_ELASTICSEARCH), ("mysql", RUN_MYSQL)]|list_if }}
@@ -8,6 +20,7 @@ richie-job:
     volumes:
       - ../plugins/richie/apps/settings/tutor.py:/app/richie/sandbox/tutor.py:ro
       - ../../data/richie/media:/data/media
+{% endif %}
 richie-openedx-job:
     image: {{ DOCKER_IMAGE_OPENEDX }}
     environment:

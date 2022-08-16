@@ -2,7 +2,11 @@ from django.conf import global_settings, settings
 from django.utils.translation import gettext_lazy as _
 
 from configurations import values
+{% if RICHIE_FACTORY_REPOSITORY %}
+from {{ RICHIE_FACTORY_SITE }}.settings import Development, Production
+{% else %}
 from settings import Development, Production
+{% endif %}
 
 supported_languages = [("en", _("English")),]
 extra_language_code = "{{ LANGUAGE_CODE }}"
@@ -55,6 +59,8 @@ class TutorSettingsMixin:
     }
     PARLER_LANGUAGES = CMS_LANGUAGES
 
+    SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
     {{ patch("richie-settings-common")|indent(4) }}
 
 class TutorProduction(TutorSettingsMixin, Production):
@@ -68,6 +74,7 @@ class TutorProduction(TutorSettingsMixin, Production):
     SESSION_COOKIE_SECURE = False
     {% endif %}
 
+    CDN_DOMAIN = "{{ RICHIE_HOST }}"
     {{ patch("richie-settings-production")|indent(4) }}
 
 
