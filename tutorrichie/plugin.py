@@ -15,7 +15,7 @@ config = {
     "defaults": {
         "VERSION": __version__,
         "DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-richie:{{ RICHIE_VERSION }}",
-        "RELEASE_VERSION": "v2.9.1",
+        "RELEASE_VERSION": "v2.15.1",
         "HOST": "courses.{{ LMS_HOST }}",
         "MYSQL_DATABASE": "richie",
         "MYSQL_USERNAME": "richie",

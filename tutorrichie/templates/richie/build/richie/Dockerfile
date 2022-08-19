@@ -11,7 +11,7 @@ ARG RICHIE_VERSION={{ RICHIE_RELEASE_VERSION }}
 RUN git clone $RICHIE_REPOSITORY --branch $RICHIE_VERSION --depth 1 /richie
 
 #--------- Front-end builder image
-FROM node:14 as frontend-builder
+FROM node:16 as frontend-builder
 
 COPY --from=base /richie/src/frontend /app/richie/src/frontend
 WORKDIR /app/richie/src/frontend
@@ -42,10 +42,10 @@ RUN pip install pip==22.0.4 setuptools==62.1.0 wheel==0.37.1
 RUN pip install -e .[sandbox]
 RUN pip install uwsgi==2.0.20
 RUN pip install mysqlclient==2.1.0
-# Use temporarily a forked version of djangocms-admin-style
-# Remove this when djangocms-admin-style 2.0.3 will be released\
-# See upstream Dockerfile https://github.com/openfun/richie/blob/master/Dockerfile
-RUN pip install git+https://github.com/jbpenrath/djangocms-admin-style@fun#egg=djangocms-admin-style
+# The django-cms fork includes drillable search feature,
+# it should be removed when this feature will be officially released
+# See upstream Dockerfile https://github.com/openfun/fun-richie-site-factory/blob/main/Dockerfile
+RUN pip install git+https://github.com/jbpenrath/django-cms@fun-3.11.0#egg=django-cms
 # Install requirements for storing media assets on S3/MinIO
 RUN pip install django-storages==1.12.3 boto3==1.20.25
 
