@@ -15,16 +15,21 @@ config = {
     "defaults": {
         "VERSION": __version__,
         "DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-richie:{{ RICHIE_VERSION }}",
-        "RELEASE_VERSION": "v2.9.1",
+        "FACTORY_DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-richie-factory:{{ RICHIE_VERSION }}",
+        "RELEASE_VERSION": "v2.15.1",
         "HOST": "courses.{{ LMS_HOST }}",
         "MYSQL_DATABASE": "richie",
         "MYSQL_USERNAME": "richie",
         "ELASTICSEARCH_INDICES_PREFIX": "richie",
+        "FACTORY_REPOSITORY": "",
     },
 }
 
 hooks = {
-    "build-image": {"richie": "{{ RICHIE_DOCKER_IMAGE }}"},
+    "build-image": {
+        "richie": "{{ RICHIE_DOCKER_IMAGE }}",
+        "richie-factory": "{{ RICHIE_FACTORY_DOCKER_IMAGE }}",
+    },
     "remote-image": {"richie": "{{ RICHIE_DOCKER_IMAGE }}"},
     "init": ["mysql", "richie", "richie-openedx"],
 }
