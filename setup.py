@@ -25,20 +25,20 @@ ABOUT = load_about()
 
 
 setup(
-    name="tutor-richie",
+    name="tutor-contrib-richie",
     version=ABOUT["__version__"],
-    url="https://github.com/overhangio/tutor-richie",
+    url="https://github.com/openfun/tutor-contrib-richie",
     project_urls={
-        "Code": "https://github.com/overhangio/tutor-richie",
-        "Issue tracker": "https://github.com/overhangio/tutor-richie/issues",
+        "Code": "https://github.com/openfun/tutor-contrib-richie",
+        "Issue tracker": "https://github.com/openfun/tutor-contrib-richie/issues",
     },
     license="AGPLv3",
-    author="Overhang.IO",
-    description="richie plugin for Tutor",
+    author="Open FUN (France Universite Numerique) & Overhang.IO",
+    description="Richie plugin for Tutor",
     long_description=load_readme(),
     packages=find_packages(exclude=["tests*", "contrib*"]),
     include_package_data=True,
-    python_requires=">=3.5",
+    python_requires=">=3.7",
     install_requires=["tutor>=14.0.0,<15.0.0"],
     entry_points={
         "tutor.plugin.v0": [

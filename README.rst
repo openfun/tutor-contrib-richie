@@ -3,12 +3,14 @@ Richie plugin for `Tutor <https://docs.tutor.overhang.io>`__
 
 This is a plugin to integrate `Richie <https://richie.education/>`__, the learning portal CMS, with `Open edX <https://open.edx.org>`__. The integration takes the form of a `Tutor <https://docs.tutor.overhang.io>`__ plugin.
 
+    ⚠ WARNING This plugin is currently undergoing major changes and is being transferred to the `openfun <https://github.com/openfun/>`__ organization.
+
 Installation
 ------------
 
 ::
 
-    pip install tutor-richie
+    pip install tutor-contrib-richie
     tutor plugins enable richie
 
 Running the Richie plugin will require that you rebuild the "openedx" Docker image::
