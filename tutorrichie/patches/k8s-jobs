@@ -12,14 +12,6 @@ spec:
       containers:
         - name: richie
           image: {{ RICHIE_DOCKER_IMAGE }}
-          volumeMounts:
-            - mountPath: /app/richie/sandbox/tutor.py
-              name: settings
-              subPath: tutor.py
           envFrom:
             - secretRef:
                 name: richie-env
-      volumes:
-        - name: settings
-          configMap:
-            name: richie-settings

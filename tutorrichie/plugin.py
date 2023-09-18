@@ -13,6 +13,7 @@ config = {
         "HOOK_SECRET": "{{ 20|random_string }}",
         "SECRET_KEY": "{{ 20|random_string }}",
         "MYSQL_PASSWORD": "{{ 12|random_string }}",
+        "COURSE_RUN_SYNC_SECRETS": "{{ 12|random_string }}"
     },
     "defaults": {
         "VERSION": __version__,
@@ -21,7 +22,15 @@ config = {
         "HOST": "courses.{{ LMS_HOST }}",
         "MYSQL_DATABASE": "richie",
         "MYSQL_USERNAME": "richie",
+        "BUCKET_NAME": "richieuploads",
+        "MEDIA_BUCKET_NAME": "production-richie-media",
         "ELASTICSEARCH_INDICES_PREFIX": "richie",
+        "DJANGO_SETTINGS_MODULE": "settings.production",
+        "DJANGO_CONFIGURATION": "Production",
+        "AWS_DEFAULT_ACL": "public-read",
+        "AWS_S3_SIGNATURE_VERSION": "s3v4",
+        "AWS_REGION": "us-east-1",
+        "AWS_QUERYSTRING_AUTH": "false",
     },
 }
 

@@ -22,16 +22,8 @@ spec:
           image: {{ RICHIE_DOCKER_IMAGE }}
           ports:
             - containerPort: 8000
-          volumeMounts:
-            - mountPath: /app/richie/sandbox/tutor.py
-              name: settings
-              subPath: tutor.py
           envFrom:
             - secretRef:
                 name: richie-env
           securityContext:
             allowPrivilegeEscalation: false
-      volumes:
-        - name: settings
-          configMap:
-            name: richie-settings
